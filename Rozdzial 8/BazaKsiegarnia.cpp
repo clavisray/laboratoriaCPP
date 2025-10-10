@@ -5,7 +5,7 @@ using namespace std;
 const int N = 20;
 
 struct Ksiazka {
-  // int idKsiazki;
+  int idKsiazki;
 	char tytul[80];
   char autor[80];
   int liczbaStron;
@@ -34,7 +34,7 @@ void DodajKsiazke(){
 
     if(baza[i].rekordSkasowany || baza[i].tytul[0] == '\0'){
 
-      // baza[i].idKsiazki = i;
+      baza[i].idKsiazki = i;
       strcpy(baza[i].tytul, tytul);
       strcpy(baza[i].autor, autor);
       baza[i].liczbaStron = liczbaStron;
@@ -78,15 +78,21 @@ void EdytujKsiazke(){
   cout << "Podaj liczbe stron ksiazki: ";
   cin >> liczbaStron;
 
+  cout << "Czy wypozyczona?: ";
+  cin >> wypozyczona;
+
+  cout << "Czy usunieta?: ";
+  cin >> rekordSkasowany;
+
   for(int i = 0; i < N; i++){
-    if (ktoraKsiazka == i){
+    if (i == ktoraKsiazka){
       strcpy(baza[i].tytul, tytul);
       strcpy(baza[i].autor, autor);
       baza[i].liczbaStron = liczbaStron;
       baza[i].wypozyczona = wypozyczona;
       baza[i].rekordSkasowany = rekordSkasowany;
 
-      cout << "Ksiazka numer edytowana pomyslnie!";
+      cout << "Ksiazka numer " << ktoraKsiazka << " edytowana pomyslnie!\n";
 
       break;
     }
@@ -96,22 +102,124 @@ void EdytujKsiazke(){
 
 void UsunKsiazke(){
 
+  int ktoraKsiazka;
+
+  do{
+    cout << "Wpisz ID ksiazki ktora chcesz usunac: \n";
+    cin >> ktoraKsiazka;
+
+    if(ktoraKsiazka < 0 || ktoraKsiazka >= N){
+      
+      cout << "Podano niewlasciwa wartosc. Podaj liczbe z zakresu 0-19!\n";
+
+    }
+  } while (ktoraKsiazka < 0 || ktoraKsiazka >= N);
+
+  for (int i = 0; i < N; i++){
+
+    if (i == ktoraKsiazka){
+
+      baza[i].rekordSkasowany = true;
+      cout << "Pomyslnie usunieto ksiazke o numerze ID " << ktoraKsiazka << endl;
+      break;
+
+    }
+
+  }
+
 }
 
+
 void WypozyczKsiazke(){
+
+  int ktoraKsiazka;
+
+  do{
+    cout << "Wpisz ID ksiazki ktora chcesz wypozyczyc: \n";
+    cin >> ktoraKsiazka;
+
+    if(ktoraKsiazka < 0 || ktoraKsiazka >= N){
+      
+      cout << "Podano niewlasciwa wartosc. Podaj liczbe z zakresu 0-19!\n";
+
+    }
+  } while (ktoraKsiazka < 0 || ktoraKsiazka >= N);
+
+  for (int i = 0; i < N; i++){
+
+    if (i == ktoraKsiazka){
+
+      baza[i].wypozyczona = true;
+      cout << "Pomyslnie wypozyczono ksiazke o numerze ID " << ktoraKsiazka << endl;
+      break;
+
+    }
+
+  }
 
 }
 
 void ZwrocKsiazke(){
 
+  int ktoraKsiazka;
+
+  do{
+    cout << "Wpisz ID ksiazki ktora chcesz zwrocic: \n";
+    cin >> ktoraKsiazka;
+
+    if(ktoraKsiazka < 0 || ktoraKsiazka >= N){
+      
+      cout << "Podano niewlasciwa wartosc. Podaj liczbe z zakresu 0-19!\n";
+
+    }
+  } while (ktoraKsiazka < 0 || ktoraKsiazka >= N);
+
+  for (int i = 0; i < N; i++){
+
+    if (i == ktoraKsiazka){
+
+      baza[i].wypozyczona = false;
+      cout << "Pomyslnie zwrocono ksiazke o numerze ID " << ktoraKsiazka << endl;
+      break;
+
+    }
+
+  }
+
 }
 
 void WyswietlWszystkie(){
 
+  for (int i = 0; i < N; i++) {
+
+    if (baza[i].tytul[0] != '\0' && !baza[i].rekordSkasowany) { 
+        cout << "ID: " << baza[i].idKsiazki << endl;
+        cout << "Tytul: " << baza[i].tytul << endl;
+        cout << "Autor: " << baza[i].autor << endl;
+        cout << "Liczba stron: " << baza[i].liczbaStron << endl;
+        cout << "Wypozyczona: " << (baza[i].wypozyczona ? "tak" : "nie") << endl;
+        cout << "Rekord skasowany?: " << (baza[i].rekordSkasowany ? "tak" : "nie") << endl;
+        cout << "-------------------------\n";
+
+    }
+  }
 }
 
 void WyswietlWypozyczone(){
 
+  for (int i = 0; i < N; i++) {
+
+    if (baza[i].wypozyczona == true && !baza[i].rekordSkasowany) { 
+        cout << "ID: " << baza[i].idKsiazki << endl;
+        cout << "Tytul: " << baza[i].tytul << endl;
+        cout << "Autor: " << baza[i].autor << endl;
+        cout << "Liczba stron: " << baza[i].liczbaStron << endl;
+        cout << "Wypozyczona: " << (baza[i].wypozyczona ? "tak" : "nie") << endl;
+        cout << "Rekord skasowany?: " << (baza[i].rekordSkasowany ? "tak" : "nie") << endl;
+        cout << "-------------------------\n";
+
+    }
+  }
 }
 
 int main() {
