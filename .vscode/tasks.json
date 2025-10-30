@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build active file (C++23)",
+            "type": "shell",
+            "command": "clang++",
+            "args": [
+                "-std=c++23",                           
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}",
+                "-Wall", "-Wextra", "-Wpedantic"        
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Kompilacja bieżącego pliku C++ z użyciem standardu C++23"
+        }
+    ]
+}
