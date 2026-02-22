@@ -1,0 +1,5 @@
+Raport dla pliku: dane.txt
+Przyspieszenia: 1
+Hamowania: 1
+Lewo: 10
+Prawo: 5

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<report file="dane.txt">
+  <speed-up-count>1</speed-up-count>
+  <slow-down-count>1</slow-down-count>
+  <left-turn-count>10</left-turn-count>
+  <right-turn-count>5</right-turn-count>
+</report>

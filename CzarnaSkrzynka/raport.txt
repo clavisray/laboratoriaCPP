@@ -1,0 +1,10 @@
+Raport dla pliku:
+dane.txt
+Data utworzenia:
+2026-01-11
+Czas utworzenia:
+14:56:48
+Przyspieszenia: 3
+Hamowania: 0
+Lewo: 2
+Prawo: 3
