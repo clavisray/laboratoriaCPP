@@ -25,7 +25,7 @@ class Task{
         std::string toString() const {
             std::ostringstream out;
 
-            out << "(" << id_ << ")" << " Task: " << title_ << " | prio: " << priority_ << (done_ ? "[x]" : "[ ]");
+            out << "(" << id_ << ")" << " Task: " << title_ << " | prio: " << priority_ << " " << (done_ ? "[x]" : "[ ]");
             return out.str();
         }
 };
@@ -36,20 +36,30 @@ class TodoList{
         int nextId_ = 1;
 
     public:
-        void print() const;
-        void addTasks(std::string& title){
-            
+        void print() const {
+            for(const Task& t : tasks_){
+                std::cout << t.toString() << '\n';
+            }
+        };
+
+        void addTask(const std::string& title){
+            tasks_.push_back(Task(nextId_++, title));
         };
 };
 
 int main(){
-    Task t(1, "Wyprowadz psa");
-    std::cout << t.toString() << std::endl;
-    t.markDone();
-    std::cout << t.toString() << std::endl;
-    t.markDone();
-    std::cout << t.toString() << std::endl;
-    t.toggleDone();
-    std::cout << t.toString() << std::endl;
+    TodoList lista;
+    lista.addTask("wynieś śmieci");
+    lista.addTask("poodkurzaj");
+
+    lista.print();
+
+    Task zadanie(1, "wyniesienie smieci");
+    Task zadanko(2, "poodkurzanie");
+
+    zadanie.toString();
+    zadanko.toString();
+
+    lista.print();
     return 0;
 }
