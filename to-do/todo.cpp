@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <limits>
 
 class Task{
     private:
@@ -34,6 +35,14 @@ class TodoList{
     private:
         std::vector<Task> tasks_;
         int nextId_ = 1;
+        Task* findByID(int id) {
+            for (Task& t : tasks_) {
+                if(t.id() == id){
+                    return &t;
+                }
+            }
+            return nullptr;
+        }
 
     public:
         void print() const {
@@ -43,23 +52,78 @@ class TodoList{
         };
 
         void addTask(const std::string& title){
-            tasks_.push_back(Task(nextId_++, title));
+            tasks_.emplace_back(Task(nextId_++, title));
         };
+
+        bool markDone(int id) {
+            Task* t = findByID(id);
+            if(!t) return false;
+            t->markDone();
+            return true;
+        }
+
+        bool removeTask(int id) {
+            for (size_t i = 0; i < tasks_.size(); i++) {
+                if (tasks_[i].id() == id) {
+                    tasks_.erase(tasks_.begin() + i);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // dodać void setTitle && bool editTitle
 };
 
 int main(){
+    std::cout << "==== TO-DO APP ====\n";
     TodoList lista;
-    lista.addTask("wynieś śmieci");
-    lista.addTask("poodkurzaj");
 
-    lista.print();
+    bool loopStatus = true;
 
-    Task zadanie(1, "wyniesienie smieci");
-    Task zadanko(2, "poodkurzanie");
+    while (loopStatus){
+        std::cout << "1. View the entire tasks list\n" ;
+        std::cout << "2. Add new task\n" ;
+        std::cout << "3. Delete task\n" ;
+        std::cout << "4. Edit task\n" ;
+        std::cout << "5. Quit\n" ;
 
-    zadanie.toString();
-    zadanko.toString();
+        int userInput;
+        std::cin >> userInput;
 
-    lista.print();
+        switch (userInput) {
+        case 1: 
+            lista.print();
+            break;
+        case 2: {
+            // zrobić obsługę nie znalezienia taska i pomyślnego dodania taska
+            std::string title;
+            
+            std::cout << "Insert name for a new task\n";
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            getline(std::cin, title);
+
+            lista.addTask(title);
+            break;
+        }
+        case 3: {
+            // zrobić obsługę nie znalezienia taska i pomyślnego usunięcia
+            int id;
+
+            std::cout << "Insert task ID that needs to be deleted\n";
+            std::cin >> id;
+            lista.removeTask(id);
+            break;
+        }
+        case 4:
+            break;
+        case 5:
+            loopStatus = false;
+            break;
+        default:
+            std::cout << "Invalid option. Choose between 1-5\n";
+        }
+    }
+
     return 0;
 }
